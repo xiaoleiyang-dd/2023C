@@ -1,0 +1,80 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "MSPM0L130X" --package "VQFN-32(RHB)" --part "Default" --product "mspm0_sdk@1.10.00.05"
+ * @versions {"tool":"1.17.0+3128"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ADC12  = scripting.addModule("/ti/driverlib/ADC12", {}, false);
+const ADC121 = ADC12.addInstance();
+const Board  = scripting.addModule("/ti/driverlib/Board");
+const GPIO   = scripting.addModule("/ti/driverlib/GPIO", {}, false);
+const GPIO1  = GPIO.addInstance();
+const SPI    = scripting.addModule("/ti/driverlib/SPI", {}, false);
+const SPI1   = SPI.addInstance();
+const SYSCTL = scripting.addModule("/ti/driverlib/SYSCTL");
+const UART   = scripting.addModule("/ti/driverlib/UART", {}, false);
+const UART1  = UART.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ADC121.$name                      = "ADC12_0";
+ADC121.samplingOperationMode      = "sequence";
+ADC121.endAdd                     = 2;
+ADC121.adcMem1chansel             = "DL_ADC12_INPUT_CHAN_1";
+ADC121.adcMem2chansel             = "DL_ADC12_INPUT_CHAN_2";
+ADC121.sampClkSrc                 = "DL_ADC12_CLOCK_ULPCLK";
+ADC121.sampClkDiv                 = "DL_ADC12_CLOCK_DIVIDE_8";
+ADC121.enableFIFO                 = true;
+ADC121.powerDownMode              = "DL_ADC12_POWER_DOWN_MODE_MANUAL";
+ADC121.sampleTime0                = "40us";
+ADC121.enabledInterrupts          = ["DL_ADC12_INTERRUPT_MEM2_RESULT_LOADED"];
+ADC121.peripheral.$assign         = "ADC0";
+ADC121.peripheral.adcPin0.$assign = "PA27";
+ADC121.peripheral.adcPin1.$assign = "PA26";
+ADC121.peripheral.adcPin2.$assign = "PA25";
+ADC121.adcPin0Config.$name        = "ti_driverlib_gpio_GPIOPinGeneric6";
+ADC121.adcPin1Config.$name        = "ti_driverlib_gpio_GPIOPinGeneric7";
+ADC121.adcPin2Config.$name        = "ti_driverlib_gpio_GPIOPinGeneric8";
+
+Board.InitPriority1               = "/ti/driverlib/GPIO";
+Board.peripheral.$assign          = "DEBUGSS";
+Board.peripheral.swclkPin.$assign = "PA20";
+Board.peripheral.swdioPin.$assign = "PA19";
+
+GPIO1.$name                   = "GPIO_GRP_0";
+GPIO1.associatedPins[0].$name = "LED_1";
+
+SPI1.$name                      = "SPI_0";
+SPI1.targetBitRate              = 320000;
+SPI1.frameFormat                = "MOTO3";
+SPI1.polarity                   = "1";
+SPI1.direction                  = "PICO";
+SPI1.peripheral.$assign         = "SPI0";
+SPI1.peripheral.sclkPin.$assign = "PA6";
+SPI1.peripheral.mosiPin.$assign = "PA18";
+SPI1.sclkPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric2";
+SPI1.mosiPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric3";
+
+
+UART1.$name                    = "UART_0";
+UART1.enableDMARX              = false;
+UART1.enableDMATX              = false;
+UART1.enableFIFO               = true;
+UART1.peripheral.$assign       = "UART0";
+UART1.peripheral.rxPin.$assign = "PA9";
+UART1.peripheral.txPin.$assign = "PA8";
+UART1.txPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric0";
+UART1.rxPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric1";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+GPIO1.associatedPins[0].pin.$suggestSolution = "PA0";
+SYSCTL.peripheral.$suggestSolution           = "SYSCTL";
